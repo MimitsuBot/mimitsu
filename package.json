@@ -1,0 +1,31 @@
+{
+  "name": "mimitsu",
+  "description": "A focused RPG discord bot which brings a custom farm system and also, a lot of fun.",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "sucrase-node index.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "discord-akairo": "^8.0.0",
+    "discord.js": "^12.0.2",
+    "pg": "^8.0.0",
+    "sequelize": "^5.21.5"
+  },
+  "devDependencies": {
+    "@sentry/node": "^5.15.0",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^13.9.3",
+    "@typescript-eslint/parser": "^2.26.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "pg-hstore": "^2.3.3",
+    "sucrase": "^3.12.1",
+    "typescript": "^3.8.3"
+  }
+}
