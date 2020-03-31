@@ -15,8 +15,6 @@
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%c696e2">
 
-  <img alt="Support Server" src="https://img.shields.io/discord/694581258470162472?label=Support%20Server&logo=discord&logoColor=white">
-
   <a href="https://discord.gg/D4wgfUR">
     <img src="https://img.shields.io/discord/694581258470162472?label=Support%20Server&logo=discord&logoColor=white" alt="Support Server">
   </a>
@@ -52,12 +50,12 @@ Take a look below to see some helpful informations about the features that Mimit
 
 ### Helpful Informations
 
-- [PostgresSQL](https://www.postgresql.org/) — a powerful, open source object-relational database
-  - [Sequelize](https://sequelize.org/) — a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
-- [Discord.js](https://discord.js.org/#/) — a powerful node.js module that allows you to interact with the Discord API
+- [PostgresSQL](https://www.postgresql.org/) — a powerful, open source object-relational database.
+  - [Sequelize](https://sequelize.org/) — a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
+- [Typescript](https://www.typescriptlang.org/) — a typed superset of JavaScript that compiles to plain JavaScript.
+- [Discord.js](https://discord.js.org/#/) — a powerful node.js module that allows you to interact with the Discord API.
   - [Discord Akairo](https://discord-akairo.github.io/#/) — a powerful and flexible bot framework for discord.js.
-- [Sentry](https://http://sentry.io/) — error tracking with full stacktraces & asynchronous context
-- [Typescript](https://www.typescriptlang.org/) — a typed superset of JavaScript that compiles to plain JavaScript
+- [Sentry](https://http://sentry.io/) — error tracking with full stacktraces & asynchronous context.
 
 ### Extra Informations
 
