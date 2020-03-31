@@ -57,10 +57,6 @@ Take a look below to see some helpful informations about the features that Mimit
   - [Discord Akairo](https://discord-akairo.github.io/#/) — a powerful and flexible bot framework for discord.js.
 - [Sentry](https://http://sentry.io/) — error tracking with full stacktraces & asynchronous context.
 
-### Extra Informations
-
-- Mimitsu
-
 ### Reporting bugs
 
 Found something that isn't right ? A translation error, or even a text that is missing a word. First of all, we recommend that you read or [Troubleshoot guide](https://github.com/mimitsubot/troubleshoot-guide) and try to look for a fix to your issue. If your problem isn't listed there, then please, let us know about this bug! You can report a bug by opening an [issue](https://github.com/mimitsubot/mimitsu-docs/issues/new?template=Bug_report.md). Please give us as much information as you can.

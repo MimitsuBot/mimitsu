@@ -1,16 +1,16 @@
-import Database from "./structures/Database";
-import SettingsProvider from "./structures/SettingsProvider";
-import Setting from "./structures/models/settings";
+import Database from './structures/Database';
+import SettingsProvider from './structures/SettingsProvider';
+import Setting from './structures/models/settings';
 
 import {
   AkairoClient,
   CommandHandler,
   InhibitorHandler,
-  ListenerHandler
-} from "discord-akairo";
-import { init } from "@sentry/node";
+  ListenerHandler,
+} from 'discord-akairo';
+import { init } from '@sentry/node';
 
-declare module "discord-akairo" {
+declare module 'discord-akairo' {
   interface AkairoClient {
     commandHandler: CommandHandler;
     settings: any;
@@ -20,36 +20,36 @@ declare module "discord-akairo" {
 
 export default class MimitsuClient extends AkairoClient {
   public commandHandler: CommandHandler = new CommandHandler(this, {
-    directory: "./src/commands/",
+    directory: './src/commands/',
     prefix: message =>
-      this.settings.get(message.guild.id, "prefix", ["m!", "mimitsu "]),
+      this.settings.get(message.guild.id, 'prefix', ['m!', 'mimitsu ']),
     allowMention: true,
     fetchMembers: true,
     commandUtil: true,
     commandUtilLifetime: 3e5,
     commandUtilSweepInterval: 9e5,
-    handleEdits: true
+    handleEdits: true,
   });
 
   public inhibitorHandler = new InhibitorHandler(this, {
-    directory: "./src/inhibitors"
+    directory: './src/inhibitors',
   });
 
   public listenerHandler = new ListenerHandler(this, {
-    directory: "./src/listeners"
+    directory: './src/listeners',
   });
 
   public constructor() {
     super(
       {
-        ownerID: ["532294395655880705"]
+        ownerID: ['532294395655880705'],
       },
       {
         messageCacheMaxSize: 50,
         messageCacheLifetime: 300,
         messageSweepInterval: 900,
-        partials: ["MESSAGE"]
-      }
+        partials: ['MESSAGE'],
+      },
     );
 
     this.settings = new SettingsProvider(Setting);
@@ -68,7 +68,7 @@ export default class MimitsuClient extends AkairoClient {
     this.listenerHandler.setEmitters({
       commandHandler: this.commandHandler,
       inhibitorHandler: this.inhibitorHandler,
-      listenerHandler: this.listenerHandler
+      listenerHandler: this.listenerHandler,
     });
 
     this.commandHandler.loadAll();
@@ -76,9 +76,9 @@ export default class MimitsuClient extends AkairoClient {
     this.listenerHandler.loadAll();
   }
 
-  public async start() {
+  public async start(token: string = process.env.DISCORD_TOKEN) {
     await Database.authenticate();
     await this.settings.init();
-    return this.login(process.env.DISCORD_TOKEN);
+    return this.login(token);
   }
 }
