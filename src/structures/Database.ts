@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize';
 import 'dotenv/config';
 
 const database = new Sequelize(process.env.POSTGRES_URL, { logging: false });

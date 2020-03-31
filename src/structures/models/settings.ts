@@ -1,17 +1,16 @@
-import db from "../Database";
-import Sequelize from "sequelize";
+import db from '../Database';
+import { STRING, JSONB } from 'sequelize';
 
-const Settings = db.database.define("settings", {
+const Settings = db.database.define('settings', {
   guildID: {
-    type: Sequelize.STRING,
+    type: STRING,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
   },
   settings: {
-    type: Sequelize.JSONB,
+    type: JSONB,
     allowNull: false,
-    default: {}
-  }
+  },
 });
 
 export default Settings;

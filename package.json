@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "test": "jest",
     "dev": "sucrase-node index.ts"
   },
   "license": "MIT",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@sentry/node": "^5.15.0",
+    "@types/jest": "^25.1.4",
     "@types/moment": "^2.13.0",
     "@types/node": "^13.9.3",
     "@typescript-eslint/parser": "^2.26.0",
@@ -24,8 +26,10 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.2.4",
     "pg-hstore": "^2.3.3",
     "sucrase": "^3.12.1",
+    "ts-jest": "^25.3.0",
     "typescript": "^3.8.3"
   }
 }
