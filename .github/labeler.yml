@@ -1,0 +1,6 @@
+'scope: repository':
+  - ./*
+
+'scope: commands':
+  - src/commands/*
+  - src/commands/**/*
