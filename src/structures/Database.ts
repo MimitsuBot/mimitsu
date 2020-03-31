@@ -1,9 +1,7 @@
 import Sequelize from 'sequelize';
+import 'dotenv/config';
 
-const database = new Sequelize(
-  'postgres://zwgwqjaz:fkSRl_5YbsdOcShdVTEejqOOXf8-Q5u5@tuffi.db.elephantsql.com:5432/zwgwqjaz',
-  { logging: false },
-);
+const database = new Sequelize(process.env.POSTGRES_URL, { logging: false });
 
 export default class Database {
   static get database() {
