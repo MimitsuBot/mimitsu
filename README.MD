@@ -48,6 +48,21 @@ If you know how to code in TypeScript, then feel free to give [one of the existe
 
 > ⚠ **Please don't open a Pull Request with features that haven't been discussed as issues yet.** We don't want you to waste time writing a feature that might get denied. If you have an idea and want it to be in the bot, check the [Ideas and discussion](#ideas-and-discussion) paragraph above.
 
+Take a look below to see some helpful informations about the features that Mimitsu uses in her code.
+
+### Helpful Informations
+
+- [PostgresSQL](https://www.postgresql.org/) — a powerful, open source object-relational database
+  - [Sequelize](https://sequelize.org/) — a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
+- [Discord.js](https://discord.js.org/#/) — a powerful node.js module that allows you to interact with the Discord API
+  - [Discord Akairo](https://discord-akairo.github.io/#/) — a powerful and flexible bot framework for discord.js.
+- [Sentry](https://http://sentry.io/) — error tracking with full stacktraces & asynchronous context
+- [Typescript](https://www.typescriptlang.org/) — a typed superset of JavaScript that compiles to plain JavaScript
+
+### Extra Informations
+
+- Mimitsu
+
 ### Reporting bugs
 
 Found something that isn't right ? A translation error, or even a text that is missing a word. First of all, we recommend that you read or [Troubleshoot guide](https://github.com/mimitsubot/troubleshoot-guide) and try to look for a fix to your issue. If your problem isn't listed there, then please, let us know about this bug! You can report a bug by opening an [issue](https://github.com/mimitsubot/mimitsu-docs/issues/new?template=Bug_report.md). Please give us as much information as you can.
