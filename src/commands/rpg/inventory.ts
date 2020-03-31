@@ -10,8 +10,6 @@ export default class Inventory extends Command {
   }
 
   public async exec(message) {
-    this.client.settings.set(message.guild.id, 'prefix', 'm!');
-
     const embed = new MimitsuEmbed('All of your resources are listed here.')
       .setAuthor('Your inventory', message.author.displayAvatarURL())
       .setDescriptionFromBlockArray([
