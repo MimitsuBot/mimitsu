@@ -32,7 +32,7 @@
 
 ## Documentation
 
-You can see an official documentation about Mimitsu [here](localhost:8000).
+You can see an official documentation about Mimitsu [here](https://localhost:8000).
 
 ## Contribuiting
 
