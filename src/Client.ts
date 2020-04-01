@@ -1,6 +1,7 @@
 import Database from './structures/Database';
 import SettingsProvider from './structures/SettingsProvider';
 import Setting from './structures/models/settings';
+import Loader from './loaders/HttpLoader';
 
 import {
   AkairoClient,
@@ -22,7 +23,7 @@ export default class MimitsuClient extends AkairoClient {
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: './src/commands/',
     prefix: message =>
-      this.settings.get(message.guild.id, 'prefix', ['m!', 'mimitsu ']),
+      this.settings.get(message.guild?.id, 'prefix', ['m!', 'mimitsu ']),
     allowMention: true,
     fetchMembers: true,
     commandUtil: true,
@@ -54,8 +55,6 @@ export default class MimitsuClient extends AkairoClient {
 
     this.settings = new SettingsProvider(Setting);
 
-    this._init();
-
     if (process.env.SENTRY) {
       init({ dsn: process.env.SENTRY });
     }
@@ -74,11 +73,25 @@ export default class MimitsuClient extends AkairoClient {
     this.commandHandler.loadAll();
     this.inhibitorHandler.loadAll();
     this.listenerHandler.loadAll();
+
+    this.initializeLoaders();
   }
 
-  public async start(token: string = process.env.DISCORD_TOKEN) {
+  public async initializeLoaders() {
+    const loader = new Loader(this);
+
+    try {
+      await loader.load();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async start(token: any = process.env.DISCORD_TOKEN) {
     await Database.authenticate();
     await this.settings.init();
+
+    this._init();
     return this.login(token);
   }
 }
