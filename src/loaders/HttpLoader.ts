@@ -39,7 +39,7 @@ export default class HttpLoader {
     this.app.use(express.json());
 
     this.app.listen(port, () => {
-      console.log(`Listening on port ${port}`);
+      console.log(`Listening on port ${port}.`);
     });
 
     Routes(this.app, this.client);

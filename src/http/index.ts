@@ -1,11 +1,29 @@
 export default function initialize(app, client) {
-  app.get('/guilds_size', (_, res) => {
-    const guilds = client.guilds.cache.size;
-    return res.status(200).json({ guilds });
+  // Statistics
+  app.get('/statistics', (_, res) => {
+    res.status(200).json({
+      serverCount: client.guilds.cache.size,
+      userCount: client.users.cache.size,
+      uptime: process.uptime() * 1000,
+    });
   });
 
-  app.get('/users_size', (_, res) => {
-    const users = client.users.cache.size;
-    return res.status(200).json({ users });
+  // Specific Guild Information
+
+  app.get('/guild_info/:id', async (req, res) => {
+    const guild = client.guilds.cache.get(req.params.id);
+
+    if (guild) {
+      const { id, name, icon, members } = guild;
+
+      return res.status(200).json({
+        id,
+        icon,
+        name,
+        totalMembers: members.cache.size,
+      });
+    } else {
+      res.status(400).json({ error: 'Guild not found' });
+    }
   });
 }
