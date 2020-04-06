@@ -40,7 +40,7 @@ module.exports = class HTTPLoader {
 
     this.app.listen(port, () => {
       this.client.log(`Service is now running on port ${port}`, {
-        tags: ['Api'],
+        tags: ['HTTP'],
         color: 'green',
       });
     });
