@@ -1,7 +1,10 @@
 import Database from './structures/Database';
 import SettingsProvider from './structures/SettingsProvider';
 import Setting from './structures/models/settings';
-import Loader from './loaders/HttpLoader';
+import Loaders from './loaders/';
+
+import chalk from 'chalk';
+import _ from 'lodash';
 
 import {
   AkairoClient,
@@ -11,36 +14,8 @@ import {
 } from 'discord-akairo';
 import { init } from '@sentry/node';
 
-declare module 'discord-akairo' {
-  interface AkairoClient {
-    commandHandler: CommandHandler;
-    settings: any;
-    setup: any;
-  }
-}
-
 export default class MimitsuClient extends AkairoClient {
-  public commandHandler: CommandHandler = new CommandHandler(this, {
-    directory: './src/commands/',
-    prefix: message =>
-      this.settings.get(message.guild?.id, 'prefix', ['m!', 'mimitsu ']),
-    allowMention: true,
-    fetchMembers: true,
-    commandUtil: true,
-    commandUtilLifetime: 3e5,
-    commandUtilSweepInterval: 9e5,
-    handleEdits: true,
-  });
-
-  public inhibitorHandler = new InhibitorHandler(this, {
-    directory: './src/inhibitors',
-  });
-
-  public listenerHandler = new ListenerHandler(this, {
-    directory: './src/listeners',
-  });
-
-  public constructor() {
+  constructor() {
     super(
       {
         ownerID: ['532294395655880705'],
@@ -50,8 +25,28 @@ export default class MimitsuClient extends AkairoClient {
         messageCacheLifetime: 300,
         messageSweepInterval: 900,
         partials: ['MESSAGE'],
-      },
+      }
     );
+
+    this.commandHandler = new CommandHandler(this, {
+      directory: './src/commands/',
+      prefix: message =>
+        this.settings.get(message.guild?.id, 'prefix', ['m!', 'mimitsu ']),
+      allowMention: true,
+      fetchMembers: true,
+      commandUtil: true,
+      commandUtilLifetime: 3e5,
+      commandUtilSweepInterval: 9e5,
+      handleEdits: true,
+    });
+
+    this.inhibitorHandler = new InhibitorHandler(this, {
+      directory: './src/inhibitors',
+    });
+
+    this.listenerHandler = new ListenerHandler(this, {
+      directory: './src/listeners',
+    });
 
     this.settings = new SettingsProvider(Setting);
 
@@ -60,7 +55,7 @@ export default class MimitsuClient extends AkairoClient {
     }
   }
 
-  private async _init() {
+  async _init() {
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
 
@@ -77,17 +72,28 @@ export default class MimitsuClient extends AkairoClient {
     this.initializeLoaders();
   }
 
-  public async initializeLoaders() {
-    const loader = new Loader(this);
+  async initializeLoaders() {
+    for (let Loader in Loaders) {
+      let loader = new Loaders[Loader](this);
 
-    try {
-      await loader.load();
-    } catch (err) {
-      console.error(err);
+      try {
+        await loader.load();
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
-  public async start(token: any = process.env.DISCORD_TOKEN) {
+  log(message, { tags, color = 'white' }) {
+    console.log(...tags.map(t => chalk.cyan(`[${t}]`)), chalk[color](message));
+  }
+
+  logError(...args) {
+    const tags = args.length > 1 ? args.slice(0, -1).map(t => `[${t}]`) : [];
+    console.error('[Error]', ...tags, args[args.length - 1]);
+  }
+
+  async start(token = process.env.DISCORD_TOKEN) {
     await Database.authenticate();
     await this.settings.init();
 

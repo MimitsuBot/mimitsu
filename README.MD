@@ -42,7 +42,7 @@ Do you have a fantastic idea for a feature? We would love to hear about it, even
 
 ### Code
 
-If you know how to code in TypeScript, then feel free to give [one of the existent ideas](https://github.com/mimitsubot/mimitsu-docs/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22type%3A+idea%22) a try. [Fork this repository](https://github.com/mimitsubot/mimitsu-docs//fork), make some changes then open a pull request.
+If you know how to code in JavaScript, then feel free to give [one of the existent ideas](https://github.com/mimitsubot/mimitsu-docs/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22type%3A+idea%22) a try. [Fork this repository](https://github.com/mimitsubot/mimitsu-docs//fork), make some changes then open a pull request.
 
 > ⚠ **Please don't open a Pull Request with features that haven't been discussed as issues yet.** We don't want you to waste time writing a feature that might get denied. If you have an idea and want it to be in the bot, check the [Ideas and discussion](#ideas-and-discussion) paragraph above.
 

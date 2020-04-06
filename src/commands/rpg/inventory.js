@@ -2,14 +2,14 @@ import { Command } from 'discord-akairo';
 import MimitsuEmbed from '../../structures/MimitsuEmbed';
 
 export default class Inventory extends Command {
-  public constructor() {
+  constructor() {
     super('inventory', {
       aliases: ['inventory', 'inv'],
       category: 'rpg',
     });
   }
 
-  public async exec(message) {
+  async exec(message) {
     const embed = new MimitsuEmbed('All of your resources are listed here.')
       .setAuthor('Your inventory', message.author.displayAvatarURL())
       .setDescriptionFromBlockArray([

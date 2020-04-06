@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import 'dotenv/config';
+import chalk from 'chalk';
 
 const database = new Sequelize(process.env.POSTGRES_URL, { logging: false });
 
@@ -8,11 +9,14 @@ export default class Database {
     return database;
   }
 
-  public static async authenticate() {
+  static async authenticate() {
     try {
       await database.authenticate();
+
       console.log(
-        '[Postgres] Connection to database has been established successfully.',
+        `${chalk.cyan(['Postgres'])} ${chalk.blueBright(
+          'Connection to database has been established successfully'
+        )}`
       );
     } catch (err) {
       console.error('[Postgres] Unable to connect to the database:');
