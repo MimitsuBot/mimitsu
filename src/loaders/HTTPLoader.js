@@ -45,7 +45,7 @@ module.exports = class HTTPLoader {
       });
     });
 
-    return this.initializeRoutes();
+    this.initializeRoutes();
   }
 
   // Routes
