@@ -4,7 +4,6 @@ import Setting from './structures/models/settings';
 import Loaders from './loaders/';
 
 import chalk from 'chalk';
-import _ from 'lodash';
 
 import {
   AkairoClient,

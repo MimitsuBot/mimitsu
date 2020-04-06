@@ -1,7 +1,7 @@
 import db from '../Database';
 import { STRING, JSONB } from 'sequelize';
 
-const Settings = db.database.define('settings', {
+module.exports = db.database.define('settings', {
   guildID: {
     type: STRING,
     primaryKey: true,
@@ -12,5 +12,3 @@ const Settings = db.database.define('settings', {
     allowNull: false,
   },
 });
-
-export default Settings;
