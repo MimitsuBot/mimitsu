@@ -2,7 +2,15 @@ import { Sequelize } from 'sequelize';
 import 'dotenv/config';
 import chalk from 'chalk';
 
-const database = new Sequelize(process.env.POSTGRES_URL, { logging: false });
+if (!process.env.DATABASE_URL) {
+  return console.error(
+    `${chalk.cyan(['Postgres'])} ${chalk.red(
+      'No enviroment variable "DATABASE_URL" was found. Set it in order to enable postgres connection'
+    )}`
+  );
+}
+
+const database = new Sequelize(process.env.DATABASE_URL, { logging: false });
 
 export default class Database {
   static get database() {
