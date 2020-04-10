@@ -4,39 +4,45 @@ import jwt from 'jsonwebtoken';
 const BASE_API_URL = 'https://discordapp.com/api';
 
 module.exports = class EndpointUtils {
-  static authenticate ({ client }, adminOnly = false, fetchGuilds = false) {
+  static authenticate({ client }, adminOnly = false, fetchGuilds = false) {
     return async (req, res, next) => {
-      const authorization = req.get('Authorization')
+      const authorization = req.get('Authorization');
+
       if (authorization) {
-        const [ identifier, token ] = authorization.split(' ')
-        if (!identifier || !token) return res.status(400).json({ success: false })
+        const [identifier, token] = authorization.split(' ');
+        if (!identifier || !token)
+          return res.status(400).json({ success: false });
 
         switch (identifier) {
           case 'User':
             if (!adminOnly) {
               try {
-                const { accessToken } = jwt.verify(token, process.env.JWT_SECRET)
-                req.user = await this._fetchUser(client, accessToken)
-                if (fetchGuilds) req.guilds = await this._fetchGuilds(client, accessToken)
-                return next()
+                const { accessToken } = jwt.verify(
+                  token,
+                  process.env.JWT_SECRET
+                );
+                req.user = await this.fetchUser(client, accessToken);
+                if (fetchGuilds)
+                  req.guilds = await this.fetchGuilds(client, accessToken);
+                return next();
               } catch (e) {
-                return res.status(401).json({ success: false })
+                return res.status(401).json({ success: false });
               }
             }
-            break
+            break;
           case 'Admin':
             if (token === process.env.ADMIN_TOKEN) {
-              req.isAdmin = true
-              return next()
+              req.isAdmin = true;
+              return next();
             }
         }
-        return res.status(401).json({ success: false })
+        return res.status(401).json({ success: false });
       }
-      return res.status(400).json({ success: false })
-    }
+      return res.status(400).json({ success: false });
+    };
   }
 
-  static async fetchUsers(accessToken) {
+  static async fetchUser(accessToken) {
     return this._request('/users/@me', accessToken);
   }
 
