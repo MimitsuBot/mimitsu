@@ -27,31 +27,31 @@ module.exports = class Guilds extends Route {
 
     // Guild Information
 
-    router.get('/:id', async (req, res) => {
-      const guild = this.client.guilds.cache.get(req.params.id);
+    router.get('/:id', async (request, response) => {
+      const guild = this.client.guilds.cache.get(request.params.id);
 
       if (guild) {
         const { id, name, icon, members } = guild;
 
-        return res.status(200).json({
+        return response.status(200).json({
           id,
           icon,
           name,
           totalMembers: members.cache.size,
         });
       } else {
-        return res.status(400).json({ success: false });
+        return response.status(400).json({ success: false });
       }
     });
 
-    router.post('/update/:id', async (req, res) => {
-      const guild = this.client.guilds.cache.get(req.params.id);
+    router.post('/update/:id', async (request, response) => {
+      const guild = this.client.guilds.cache.get(request.params.id);
 
       if (guild) {
-        return res.status(200).json({ modules: req.body }); // WIP
+        return response.status(200).json({ modules: request.body }); // WIP
       }
 
-      return res.status(400).json({ success: false });
+      return response.status(400).json({ success: false });
     });
 
     app.use(this.path, router);

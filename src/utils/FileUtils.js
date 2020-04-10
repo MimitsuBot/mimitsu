@@ -24,7 +24,7 @@ module.exports = class FileUtils {
             f.isDirectory()
           );
           if (isDirectory) {
-            return FileUtils.requireDirectory(fullPath, success, error);
+            return FileUtils.requireDirectory(fullPath, success);
           }
         }
       })

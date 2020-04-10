@@ -30,7 +30,7 @@ export default class MimitsuClient extends AkairoClient {
     this.commandHandler = new CommandHandler(this, {
       directory: './src/commands/',
       prefix: message =>
-        this.settings.get(message.guild?.id, 'prefix', ['m!', 'mimitsu ']),
+        this.settings.get(message.guild.id, 'prefix', ['m!', 'mimitsu ']),
       allowMention: true,
       fetchMembers: true,
       commandUtil: true,

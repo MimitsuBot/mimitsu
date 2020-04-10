@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo';
 
-export default class Fish extends Command {
+module.exports = class Fish extends Command {
   constructor() {
     super('fish', {
       aliases: ['fish'],
@@ -21,4 +21,4 @@ export default class Fish extends Command {
 
     message.channel.send(rightMessage);
   }
-}
+};

@@ -1,1 +1,1 @@
-worker: yarn dev
+web: yarn dev

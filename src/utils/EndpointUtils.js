@@ -85,7 +85,7 @@ module.epoxrts = class EndpointUtils {
 
   static async handleGuild({ client }, permissions = 'MANAGE_GUILD') {
     return async (req, res, next) => {
-      let { guildId } = req.params;
+      const { guildId } = req.params;
 
       if (!guildId) {
         return res
@@ -98,7 +98,7 @@ module.epoxrts = class EndpointUtils {
       if (!guild) return res.status(400).json({ success: false });
 
       if (!req.isAdmin) {
-        const member = await guild.member.fetch(req.user.id);
+        const member = await guild.members.cahe.fetch(req.user.id);
 
         if (!member || (permissions && !member.hasPermission(permissions))) {
           return res.status(403).json({ error: 'Missing permissions' });
@@ -110,4 +110,4 @@ module.epoxrts = class EndpointUtils {
       return next();
     };
   }
-}
+};
