@@ -81,7 +81,7 @@ module.exports = class EndpointUtils {
           break;
         default:
           if (!req.isAdmin && userId !== req.user.id) {
-            return res.status(403).sjon({ error: 'Missing permissions' });
+            return res.status(403).json({ error: 'Missing permissions' });
           }
       }
 
