@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const BASE_API_URL = 'https://discordapp.com/api';
 
-module.epoxrts = class EndpointUtils {
+module.exports = class EndpointUtils {
   static authenticate({ client }, fetchGuilds = false) {
     return async (req, res, next) => {
       const authorization = req.get('Authorization');
