@@ -4,34 +4,36 @@ import jwt from 'jsonwebtoken';
 const BASE_API_URL = 'https://discordapp.com/api';
 
 module.exports = class EndpointUtils {
-  static authenticate({ client }, fetchGuilds = false) {
+  static authenticate ({ client }, adminOnly = false, fetchGuilds = false) {
     return async (req, res, next) => {
-      const authorization = req.get('Authorization');
+      const authorization = req.get('Authorization')
+      if (authorization) {
+        const [ identifier, token ] = authorization.split(' ')
+        if (!identifier || !token) return res.status(400).json({ success: false })
 
-      if (!authorization) {
-        return res.status(400).json({ success: false, error: 'Unauthorized' });
+        switch (identifier) {
+          case 'User':
+            if (!adminOnly) {
+              try {
+                const { accessToken } = jwt.verify(token, process.env.JWT_SECRET)
+                req.user = await this._fetchUser(client, accessToken)
+                if (fetchGuilds) req.guilds = await this._fetchGuilds(client, accessToken)
+                return next()
+              } catch (e) {
+                return res.status(401).json({ success: false })
+              }
+            }
+            break
+          case 'Admin':
+            if (token === process.env.ADMIN_TOKEN) {
+              req.isAdmin = true
+              return next()
+            }
+        }
+        return res.status(401).json({ success: false })
       }
-
-      const [token] = authorization.split(' ');
-
-      if (!token) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-      }
-
-      try {
-        const { accessToken } = jwt.verify(token, process.env.JWT_TOKEN);
-
-        req.user = await this.fetchUsers(accessToken);
-
-        if (fetchGuilds)
-          req.guilds = await this.fetchGuilds(client, accessToken);
-        return next();
-      } catch (err) {
-        return res
-          .status(401)
-          .json({ success: false, error: 'An error occurred' });
-      }
-    };
+      return res.status(400).json({ success: false })
+    }
   }
 
   static async fetchUsers(accessToken) {
