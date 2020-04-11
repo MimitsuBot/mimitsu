@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const fetch = require('node-fetch')
 const { URLSearchParams } = require('url')
 
-const API_URL = 'https://discordapp.com/api'
+const API_URL = 'https://discordapp.com/api/v6'
 
 module.exports = class Web extends Route {
   constructor (client) {
