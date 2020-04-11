@@ -1,4 +1,3 @@
 module.exports = {
-  HTTPLoader: require('./HTTPLoader'),
-  CommandLoader: require('./CommandLoader'),
+  HTTPLoader: require('./HTTPLoader')
 };
