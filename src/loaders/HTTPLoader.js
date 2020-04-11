@@ -27,7 +27,6 @@ module.exports = class HTTPLoader {
   initializeHTTPServer(port = process.env.PORT || 3333) {
     this.app = express();
 
-    this.app.use(cors({origin: 'http://localhost:8080'}))
     this.app.use(express.json());
 
     this.app.use(
