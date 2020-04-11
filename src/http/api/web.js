@@ -48,6 +48,7 @@ module.exports = class Web extends Route {
             ),
           });
         } catch (e) {
+          console.error(e)
           res
             .status(403)
             .json({ error: "Couldn't validate authentication code!" });
