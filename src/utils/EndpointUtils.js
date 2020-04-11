@@ -8,6 +8,8 @@ module.exports = class EndpointUtils {
     return async (req, res, next) => {
       const authorization = req.get('Authorization');
 
+      console.log(`Authorization: ${authorization}`)
+
       if (authorization) {
         const [identifier, token] = authorization.split(' ');
 
