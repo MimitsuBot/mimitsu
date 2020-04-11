@@ -49,7 +49,7 @@ module.exports = class EndpointUtils {
   static async fetchGuilds(client, accessToken) {
     return this._request('/users/@me/guilds', accessToken).then(gs => {
       gs.map(g => {
-        g.common = client.guilds.has(g.id);
+        g.common = client.guilds.cache.has(g.id);
         return g;
       });
     });
