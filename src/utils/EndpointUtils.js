@@ -1,8 +1,3 @@
-const fetch = require('node-fetch')
-const jwt = require('jsonwebtoken')
-
-const API_URL = 'https://discordapp.com/api'
-
 import fetch from "node-fetch"
 import jwt from "jsonwebtoken"
 
