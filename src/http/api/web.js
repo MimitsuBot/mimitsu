@@ -100,8 +100,6 @@ module.exports = class Web extends Route {
       ...params,
     });
 
-    console.log(process.env.CLIENT_ID)
-
     return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

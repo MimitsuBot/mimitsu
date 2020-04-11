@@ -25,6 +25,8 @@ module.exports = class EndpointUtils {
                   process.env.JWT_SECRET
                 );
 
+                console.log(`accessToken: ${accessToken}`)
+
                 req.user = await this.fetchUser(accessToken);
                 if (fetchGuilds)
                   req.guilds = await this.fetchGuilds(client, accessToken);
