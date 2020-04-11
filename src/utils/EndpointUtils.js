@@ -21,7 +21,11 @@ module.exports = class EndpointUtils {
         case 'User':
           if (!adminOnly) {
             try {
-              const { accessToken } = jwt.verify(token, process.env.JWT_SECRET);
+              const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+              console.log(decoded)
+              
+              const accessToken = decoded.accessToken 
                
               console.log(`Access token: ${accessToken}`)
               
