@@ -107,6 +107,9 @@ module.exports = class EndpointUtils {
           return res.status(403).json({ error: 'Missing Permissions' });
         }
       }
+
+      req.guildId = id;
+      return next();
     };
   }
 };
