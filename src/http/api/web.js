@@ -63,6 +63,7 @@ module.exports = class Web extends Route {
     // @me
     router.get(
       '/@me',
+      EndpointUtils.authenticate(this, false, true),
       (req, res) => {
         res.json({ user: req.user, guilds: req.guilds });
       }
