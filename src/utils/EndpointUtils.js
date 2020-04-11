@@ -21,6 +21,7 @@ module.exports = class EndpointUtils {
         case 'User':
           if (!adminOnly) {
             try {
+              console.log(token)
               const { accessToken } = jwt.verify(token, process.env.JWT_SECRET);
               req.user = await this._fetchUser(accessToken);
 
