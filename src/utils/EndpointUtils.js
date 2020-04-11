@@ -42,7 +42,7 @@ module.exports = class EndpointUtils {
   }
 
   static async _fetchGuilds(client, token) {
-    const guilds = await this._request('/users/@me/guilds');
+    const guilds = await this._request('/users/@me/guilds', token);
 
     return guilds.map(guild => {
       guild.common = client.guilds.cache.has(guild.id);
@@ -109,6 +109,7 @@ module.exports = class EndpointUtils {
       }
 
       req.guildId = id;
+
       return next();
     };
   }
