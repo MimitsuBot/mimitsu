@@ -90,6 +90,10 @@ module.exports = class WebRoute extends Route {
     return this._tokenRequest({ code, grant_type: 'authorization_code' });
   }
 
+  _refreshToken (refreshToken) {
+    return this._tokenRequest({ refresh_token: refreshToken, grant_type: 'refresh_token' })
+  }
+
   _tokenRequest(params = {}) {
     const data = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
