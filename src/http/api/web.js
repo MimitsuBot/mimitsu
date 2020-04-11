@@ -1,29 +1,34 @@
-import Route from "../../structures/Route"
-import EndpointUtils from "../../utils/EndpointUtils"
+import Route from '../../structures/Route';
+import EndpointUtils from '../../utils/EndpointUtils';
 
-import jwt from "jsonwebtoken"
-import fetch from "node-fetch"
-import { Router } from "express"
-import { URLSearchParams } from "url"
+import jwt from 'jsonwebtoken';
+import fetch from 'node-fetch';
+import { Router } from 'express';
+import { URLSearchParams } from 'url';
 
-const API_URL = 'https://discordapp.com/api/'
+const API_URL = 'https://discordapp.com/api/';
 
 module.exports = class WebRoute extends Route {
-  constructor (client) {
-    super({
-      name: 'web'
-    }, client)
+  constructor(client) {
+    super(
+      {
+        name: 'web',
+      },
+      client
+    );
   }
 
-  register (app) {
-    const router = Router()
+  register(app) {
+    const router = Router();
 
     // Login
     router.get('/login', async (req, res) => {
-      const { code } = req.query
+      const { code } = req.query;
 
       if (!code) {
-        return res.status(400).json({ error: 'You must provide a valid authentication code' })
+        return res
+          .status(400)
+          .json({ error: 'You must provide a valid authentication code' });
       }
 
       try {
@@ -32,61 +37,70 @@ module.exports = class WebRoute extends Route {
           expires_in: expiresIn,
           refresh_token: refreshToken,
           token_type: tokenType,
-          scope
-        } = await this._exchangeCode(code)
+          scope,
+        } = await this._exchangeCode(code);
 
-        return res.json({ 
-          token: jwt.sign({
-            accessToken,
-            refreshToken,
-            expiresIn,
-            expiresAt: Date.now() + expiresIn * 1000,
-            tokenType,
-            scope
-          }, process.env.JWT_SECRET)
-        })
+        return res.json({
+          token: jwt.sign(
+            {
+              accessToken,
+              refreshToken,
+              expiresIn,
+              expiresAt: Date.now() + expiresIn * 1000,
+              tokenType,
+              scope,
+            },
+            process.env.JWT_SECRET
+          ),
+        });
       } catch (err) {
-        console.error(err)
+        console.error(err);
 
-        return res.status(403).json({ error: "Couldn't validate authentication code." })
+        return res
+          .status(403)
+          .json({ error: "Couldn't validate authentication code." });
       }
-    })
+    });
 
     // @me
-    router.get("/@me", EndpointUtils.authenticate(this, false, true), (req, res) => {
-      return res.json({ user: req.user, guilds: req.guilds })
-    })
+    router.get(
+      '/@me',
+      EndpointUtils.authenticate(this, false, true),
+      (req, res) => {
+        return res.json({ user: req.user, guilds: req.guilds });
+      }
+    );
 
-    app.use(this.path, router)
+    app.use(this.path, router);
   }
 
-  _request (endpoint, token) {
+  _request(endpoint, token) {
     if (!token) {
-      throw new Error("You must provide a valid authentication token")
+      throw new Error('You must provide a valid authentication token');
     }
 
     return fetch(`${API_URL}${endpoint}`, {
-      headers: { "Authorization": `Bearer ${token}` }
-    }).then(res => res.ok ? res.json() : Promise.reject(res))
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
   }
 
-  _exchangeCode (code) {
-    return this._tokenRequest({ code, grant_type: "authorization_code" })
+  _exchangeCode(code) {
+    return this._tokenRequest({ code, grant_type: 'authorization_code' });
   }
 
-  _tokenRequest (params = {}) {
+  _tokenRequest(params = {}) {
     const data = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET
-      redirect_uri: process.env.REDIRECT_URI
+      client_secret: process.env.CLIENT_SECRET,
+      redirect_uri: process.env.REDIRECT_URI,
       scope: 'guilds identify',
-      ...params
-    })
+      ...params,
+    });
 
     return fetch(`${API_URL}/oauth2/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      data
-    }).then(res => res.ok ? res.json() : Promise.reject(res))
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data,
+    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
   }
-}
+};
