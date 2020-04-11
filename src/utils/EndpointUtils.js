@@ -10,6 +10,9 @@ module.exports = class EndpointUtils {
 
       if (authorization) {
         const [identifier, token] = authorization.split(' ');
+
+        console.log(`Identifier: ${identifier} \nToken: ${token}`)
+
         if (!identifier || !token)
           return res.status(400).json({ success: false });
 
@@ -21,7 +24,7 @@ module.exports = class EndpointUtils {
                   token,
                   process.env.JWT_SECRET
                 );
-                
+
                 req.user = await this.fetchUser(accessToken);
                 if (fetchGuilds)
                   req.guilds = await this.fetchGuilds(client, accessToken);
