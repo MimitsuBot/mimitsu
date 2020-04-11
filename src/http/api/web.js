@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import fetch from 'node-fetch';
 import { URLSearchParams } from 'url';
 
-const API_URL = 'https://discordapp.com/api';
+const API_URL = 'https://discordapp.com/api'
 
 module.exports = class Web extends Route {
   constructor(client) {
@@ -103,7 +103,7 @@ module.exports = class Web extends Route {
     return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
-    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
+      body
+    }).then(res => res.ok ? res.json() : Promise.reject(res))
   }
 };
