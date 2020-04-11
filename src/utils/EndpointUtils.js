@@ -21,8 +21,10 @@ module.exports = class EndpointUtils {
         case 'User':
           if (!adminOnly) {
             try {
-              console.log(token)
               const { accessToken } = jwt.verify(token, process.env.JWT_SECRET);
+               
+              console.log(`Access token: ${accessToken}`)
+              
               req.user = await this._fetchUser(accessToken);
 
               if (fetchGuilds)
