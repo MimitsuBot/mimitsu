@@ -31,7 +31,7 @@ module.exports = class EndpointUtils {
               return next();
             } catch (err) {
               console.error(err);
-              return res.status(401).json({ success: false });
+              return res.status(404).json({ success: false });
             }
           }
       }
