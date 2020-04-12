@@ -1,10 +1,11 @@
-import Route from '../../structures/Route';
-import EndpointUtils from '../../utils/EndpointUtils';
+import { Router } from 'express';
 
 import jwt from 'jsonwebtoken';
 import fetch from 'node-fetch';
-import { Router } from 'express';
 import { URLSearchParams } from 'url';
+
+import Route from '../../structures/Route';
+import EndpointUtils from '../../utils/EndpointUtils';
 
 const API_URL = 'https://discordapp.com/api';
 
@@ -84,7 +85,7 @@ module.exports = class WebRoute extends Route {
   }
 
   _exchangeCode(code) {
-    return this._tokenRequest({ code, grant_type: 'client_credentials' });
+    return this._tokenRequest({ code, grant_type: 'authorization_code' });
   }
 
   _refreshToken(refreshToken) {
@@ -103,14 +104,10 @@ module.exports = class WebRoute extends Route {
       ...params,
     });
 
-    const data2 = await fetch(`${API_URL}/oauth2/token`, {
+    return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data,
-    }).then(res => res.json());
-
-    console.log(data2);
-
-    return data2;
+    }).then(res => (res.ok ? res.json : Promise.reject(res)));
   }
 };
