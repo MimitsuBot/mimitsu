@@ -36,6 +36,7 @@ module.exports = class HTTPLoader {
         )}`
       )
     );
+    this.app.use(cors())
 
     this.app.listen(port, () => {
       this.client.log(`Service is now running on port ${port}`, {
