@@ -19,7 +19,7 @@ module.exports = class Guilds extends Route {
       const categories = this.client.commandHandler.categories.map(c => {
         return {
           name: c.categoryID,
-          commands: categories.category,
+          commands: c.category,
         };
       });
 
