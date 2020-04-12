@@ -19,6 +19,8 @@ module.exports = class Fish extends Command {
         ? `🎣 | You caught a **${selectedFish}** while fisinhg.`
         : 'Apparently the sea was not for fish today! You did not find any fish while fishing.';
 
-    message.channel.send(rightMessage);
+    message.channel.send(
+      'You need to buy a fishing pole before trying to fish. Type **m!buy <fishing pole>** to buy one.'
+    );
   }
 };

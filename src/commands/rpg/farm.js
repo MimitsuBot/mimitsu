@@ -1,17 +1,19 @@
 import { Command } from 'discord-akairo';
 import MimitsuEmbed from '../../structures/MimitsuEmbed';
 
-export default class Inventory extends Command {
+export default class Farm extends Command {
   constructor() {
-    super('inventory', {
-      aliases: ['inventory', 'inv'],
+    super('farm', {
+      aliases: ['farm', 'resources'],
       category: 'rpg',
     });
   }
 
   async exec(message) {
-    const embed = new MimitsuEmbed('All of your resources are listed here.')
-      .setAuthor('Your inventory', message.author.displayAvatarURL())
+    const embed = new MimitsuEmbed(
+      'All of your farm resources are listed here.'
+    )
+      .setAuthor('Resources', message.author.displayAvatarURL())
       .setDescriptionFromBlockArray([
         ['You can get more resources by executing **m!<resource>**.'],
       ])
