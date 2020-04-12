@@ -26,6 +26,7 @@ module.exports = class HTTPLoader {
 
   initializeHTTPServer(port = process.env.PORT || 3333) {
     this.app = express();
+    this.app.use(cors())
     
     this.app.use(express.json());
 
@@ -36,7 +37,6 @@ module.exports = class HTTPLoader {
         )}`
       )
     );
-    this.app.use(cors())
 
     this.app.listen(port, () => {
       this.client.log(`Service is now running on port ${port}`, {
