@@ -107,7 +107,7 @@ module.exports = class WebRoute extends Route {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data,
-    }).then(res => res.json()));
+    }).then(res => res.json());
 
     console.log(data2);
 
