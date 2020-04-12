@@ -108,7 +108,7 @@ module.exports = class WebRoute extends Route {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body,
-    }).then(res => (res.ok ? res.json : Promise.reject(res)));
+    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
 
     console.log(data);
 
