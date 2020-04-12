@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 import { Router } from 'express';
 import { URLSearchParams } from 'url';
 
-const API_URL = 'https://discordapp.com/api/';
+const API_URL = 'https://discordapp.com/api';
 
 module.exports = class WebRoute extends Route {
   constructor(client) {
