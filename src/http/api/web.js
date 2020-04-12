@@ -96,7 +96,7 @@ module.exports = class WebRoute extends Route {
   }
 
   async _tokenRequest(params = {}) {
-    const data = new URLSearchParams({
+    const body = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
       redirect_uri: process.env.REDIRECT_URI,
@@ -104,12 +104,10 @@ module.exports = class WebRoute extends Route {
       ...params,
     });
 
-    console.log(data);
-
     return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      data,
+      body,
     }).then(res => (res.ok ? res.json : Promise.reject(res)));
   }
 };
