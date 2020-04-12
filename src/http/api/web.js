@@ -22,33 +22,44 @@ module.exports = class WebRoute extends Route {
     const router = Router();
 
     // Login
-   router.get('/login', async (req, res) => {
-      const { code } = req.query
-      if (code) {
-        try {
-          const {
-            access_token: accessToken,
-            expires_in: expiresIn,
-            refresh_token: refreshToken,
-            token_type: tokenType,
-            scope
-          } = await this._exchangeCode(code)
+    router.get('/login', async (req, res) => {
+      const { code } = req.query;
 
-          res.json({ token: jwt.sign({
-            accessToken,
-            refreshToken,
-            expiresIn,
-            expiresAt: Date.now() + expiresIn * 1000,
-            tokenType,
-            scope
-          }, process.env.JWT_SECRET) })
-        } catch (e) {
-          res.status(403).json({ error: 'Couldn\'t validate authentication code!' })
-        }
-      } else {
-        res.status(400).json({ error: 'An authentication code wasn\'t provided!' })
+      if (!code) {
+        return res
+          .status(400)
+          .json({ error: "An authentication code wasn't provided!" });
       }
-    })
+
+      try {
+        const {
+          access_token: accessToken,
+          expires_in: expiresIn,
+          refresh_token: refreshToken,
+          token_type: tokenType,
+          scope,
+        } = await this._exchangeCode(code);
+
+        res.json({
+          token: jwt.sign(
+            {
+              accessToken,
+              refreshToken,
+              expiresIn,
+              expiresAt: Date.now() + expiresIn * 1000,
+              tokenType,
+              scope,
+            },
+            process.env.JWT_SECRET
+          ),
+        });
+      } catch (err) {
+        console.error(err);
+        res
+          .status(403)
+          .json({ error: 'An error occurred while validating access token' });
+      }
+    });
 
     // @me
     router.get(
@@ -69,18 +80,21 @@ module.exports = class WebRoute extends Route {
 
     return fetch(`${API_URL}${endpoint}`, {
       headers: { Authorization: `Bearer ${token}` },
-    }).then(res => res.ok ? res.json() : Promise.reject(res));
+    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
   }
 
   _exchangeCode(code) {
     return this._tokenRequest({ code, grant_type: 'authorization_code' });
   }
 
-  _refreshToken (refreshToken) {
-    return this._tokenRequest({ refresh_token: refreshToken, grant_type: 'refresh_token' })
+  _refreshToken(refreshToken) {
+    return this._tokenRequest({
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token',
+    });
   }
 
-  _tokenRequest(params = {}) {    
+  _tokenRequest(params = {}) {
     const data = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
@@ -88,7 +102,7 @@ module.exports = class WebRoute extends Route {
       scope: 'guilds identify',
       ...params,
     });
-    
+
     return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

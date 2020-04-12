@@ -19,6 +19,7 @@ module.exports = class HTTPLoader {
       await this.initializeHTTPServer();
       this.client.httpServer = this.app;
       this.client.httpRoutes = this.httpRoutes;
+      return true;
     } catch (err) {
       console.error(err);
     }
@@ -26,8 +27,8 @@ module.exports = class HTTPLoader {
 
   initializeHTTPServer(port = process.env.PORT || 3333) {
     this.app = express();
-    this.app.use(cors())
-    
+    this.app.use(cors());
+
     this.app.use(express.json());
 
     this.app.use(
@@ -45,7 +46,7 @@ module.exports = class HTTPLoader {
       });
     });
 
-    this.initializeRoutes();
+    return this.initializeRoutes();
   }
 
   // Routes
