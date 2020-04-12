@@ -22,47 +22,33 @@ module.exports = class WebRoute extends Route {
     const router = Router();
 
     // Login
-    router.get('/login', async (req, res) => {
-      const { code } = req.query;
+   router.get('/login', async (req, res) => {
+      const { code } = req.query
+      if (code) {
+        try {
+          const {
+            access_token: accessToken,
+            expires_in: expiresIn,
+            refresh_token: refreshToken,
+            token_type: tokenType,
+            scope
+          } = await this._exchangeCode(code)
 
-      if (!code) {
-        return res
-          .status(400)
-          .json({ error: 'You must provide a valid authentication code' });
+          res.json({ token: jwt.sign({
+            accessToken,
+            refreshToken,
+            expiresIn,
+            expiresAt: Date.now() + expiresIn * 1000,
+            tokenType,
+            scope
+          }, process.env.JWT_SECRET) })
+        } catch (e) {
+          res.status(403).json({ error: 'Couldn\'t validate authentication code!' })
+        }
+      } else {
+        res.status(400).json({ error: 'An authentication code wasn\'t provided!' })
       }
-
-      try {
-        const {
-          access_token: accessToken,
-          expires_in: expiresIn,
-          refresh_token: refreshToken,
-          token_type: tokenType,
-          scope,
-        } = await this._exchangeCode(code);
-        
-        console.log(accessToken)
-
-        return res.json({
-          token: jwt.sign(
-            {
-              accessToken,
-              refreshToken,
-              expiresIn,
-              expiresAt: Date.now() + expiresIn * 1000,
-              tokenType,
-              scope,
-            },
-            process.env.JWT_SECRET
-          ),
-        });
-      } catch (err) {
-        console.error(err);
-
-        return res
-          .status(403)
-          .json({ error: "Couldn't validate authentication code." });
-      }
-    });
+    })
 
     // @me
     router.get(
