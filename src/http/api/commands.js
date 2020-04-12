@@ -16,9 +16,9 @@ module.exports = class Guilds extends Route {
     const router = Router();
 
     router.get('/', (request, response) => {
-      const commands = this.client.commandHandler.categories.map(c => c.category);
+      const categories = this.client.commandHandler.categories.map(c => c);
 
-      return response.status(200).json({ commands });
+      return response.status(200).json({ categories });
     });
 
     app.use(this.path, router);
