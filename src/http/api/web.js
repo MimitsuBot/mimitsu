@@ -94,7 +94,7 @@ module.exports = class WebRoute extends Route {
     });
   }
 
-  _tokenRequest(params = {}) {
+  async _tokenRequest(params = {}) {
     const data = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
