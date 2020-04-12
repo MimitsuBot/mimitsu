@@ -79,7 +79,7 @@ module.exports = class HTTPLoader {
    */
   addRoute(route) {
     if (!(route instanceof Route)) {
-      console.error(`${route} failed to load. Not an intance of Route.`);
+      console.log(`${route} failed to load. Not an intance of Route.`);
       return false;
     }
 
