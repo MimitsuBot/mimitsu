@@ -69,7 +69,7 @@ module.exports = class WebRoute extends Route {
 
     return fetch(`${API_URL}${endpoint}`, {
       headers: { Authorization: `Bearer ${token}` },
-    }).then(res => res.json());
+    }).then(res => res.ok ? res.json() : Promise.reject(res));
   }
 
   _exchangeCode(code) {
