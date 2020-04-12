@@ -41,8 +41,6 @@ module.exports = class WebRoute extends Route {
           scope,
         } = await this._exchangeCode(code);
 
-        console.log(`accessToken: ${accessToken}`);
-
         return res.json({
           token: jwt.sign(
             {
@@ -106,10 +104,14 @@ module.exports = class WebRoute extends Route {
       ...params,
     });
 
-    return fetch(`${API_URL}/oauth2/token`, {
+    const data = await fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body,
     }).then(res => (res.ok ? res.json : Promise.reject(res)));
+
+    console.log(data);
+
+    return data;
   }
 };
