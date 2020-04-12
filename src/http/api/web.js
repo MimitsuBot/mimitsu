@@ -103,14 +103,14 @@ module.exports = class WebRoute extends Route {
       ...params,
     });
 
-    const data = fetch(`${API_URL}/oauth2/token`, {
+    const data2 = fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data,
     }).then(res => res.json());
 
-    console.log(data);
+    console.log(data2);
 
-    return data;
+    return data2;
   }
 };
