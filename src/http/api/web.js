@@ -105,9 +105,9 @@ module.exports = class WebRoute extends Route {
 
     const data2 = await fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { 'Content-Type': 'application/json' },
       data,
-    }).then(res => res.json());
+    }).then(res => (res.ok ? res.json() : Promise.reject(res)));
 
     console.log(data2);
 
