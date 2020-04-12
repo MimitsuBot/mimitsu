@@ -84,7 +84,7 @@ module.exports = class WebRoute extends Route {
   }
 
   _exchangeCode(code) {
-    return this._tokenRequest({ code, grant_type: 'authorization_code' });
+    return this._tokenRequest({ code, grant_type: 'client_credentials' });
   }
 
   _refreshToken(refreshToken) {
