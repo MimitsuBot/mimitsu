@@ -40,6 +40,8 @@ module.exports = class WebRoute extends Route {
           scope,
         } = await this._exchangeCode(code);
 
+        console.log(`Access Token: ${accessToken}`);
+
         return res.json({
           token: jwt.sign(
             {
