@@ -94,7 +94,7 @@ module.exports = class WebRoute extends Route {
     return this._tokenRequest({ refresh_token: refreshToken, grant_type: 'refresh_token' })
   }
 
-  _tokenRequest(params = {}) {
+  _tokenRequest(params = {}) {    
     const data = new URLSearchParams({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
@@ -102,6 +102,8 @@ module.exports = class WebRoute extends Route {
       scope: 'guilds identify',
       ...params,
     });
+    
+    console.log(data)
 
     return fetch(`${API_URL}/oauth2/token`, {
       method: 'POST',
