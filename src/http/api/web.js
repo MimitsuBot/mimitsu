@@ -40,7 +40,7 @@ module.exports = class WebRoute extends Route {
           scope,
         } = await this._exchangeCode(code);
 
-        res.json({
+        return res.json({
           token: jwt.sign(
             {
               accessToken,
@@ -107,10 +107,6 @@ module.exports = class WebRoute extends Route {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data,
-    }).then(res => {
-      console.log(res);
-
-      return res.json();
-    });
+    }).then(res => res.json());
   }
 };
