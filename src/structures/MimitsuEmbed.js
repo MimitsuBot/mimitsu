@@ -1,11 +1,11 @@
 import { MessageEmbed } from 'discord.js';
 
 export default class MimitsuEmbed extends MessageEmbed {
-  constructor(info = null, data = {}) {
+  constructor(author = null, data = {}) {
     super(data);
 
     this.setColor(process.env.EMBED_COLOR).setTimestamp();
-    if (info) this.setFooter(info);
+    if (author) this.setFooter(author.tag);
   }
 
   setDescriptionFromBlockArray(blocks) {

@@ -22,7 +22,7 @@ export default class Database {
       await database.authenticate();
 
       console.log(
-        `${chalk.cyan(['Postgres'])} ${chalk.blueBright(
+        `${chalk.cyan('[Postgres]')} ${chalk.blueBright(
           'Connection to database has been established successfully'
         )}`
       );

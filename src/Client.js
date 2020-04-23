@@ -1,6 +1,6 @@
-import Database from './structures/Database';
-import SettingsProvider from './structures/SettingsProvider';
-import Setting from './structures/models/settings';
+import Database from './database';
+import SettingsProvider from './database/providers/SettingsProvider';
+import Setting from './database/models/settings';
 import Loaders from './loaders/';
 
 import chalk from 'chalk';
@@ -55,6 +55,9 @@ export default class MimitsuClient extends AkairoClient {
   }
 
   async _init() {
+    await Database.authenticate();
+    await this.settings.init();
+
     this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
     this.commandHandler.useListenerHandler(this.listenerHandler);
 
@@ -64,9 +67,11 @@ export default class MimitsuClient extends AkairoClient {
       listenerHandler: this.listenerHandler,
     });
 
-    this.commandHandler.loadAll();
-    this.inhibitorHandler.loadAll();
-    this.listenerHandler.loadAll();
+    const handlers = ["commandHandler", "inhibitorHandler", "listenerHandler"]
+
+    for (const handler of handlers) {
+      this[handler].loadAll();
+    }
 
     this.initializeLoaders();
   }
@@ -92,10 +97,7 @@ export default class MimitsuClient extends AkairoClient {
     console.error('[Error]', ...tags, args[args.length - 1]);
   }
 
-  async start(token = process.env.DISCORD_TOKEN) {
-    await Database.authenticate();
-    await this.settings.init();
-
+  start(token = process.env.DISCORD_TOKEN) {
     this._init();
     return this.login(token);
   }

@@ -10,7 +10,7 @@ module.exports = class Buy extends Command {
   }
 
   exec(message) {
-    const embed = new MimitsuEmbed("Use m!buy <fishing pole> to buy a fishing pole")
+    const embed = new MimitsuEmbed(message.author)
       .setTitle('Fishing Poles')
       .setImage("https://prnt.sc/rxxabr")
     message.channel.send(embed);

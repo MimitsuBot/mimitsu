@@ -1,4 +1,4 @@
-import db from '../Database';
+import db from '../';
 import { STRING, JSONB } from 'sequelize';
 
 module.exports = db.database.define('settings', {
